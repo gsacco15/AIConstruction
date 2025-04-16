@@ -9,13 +9,25 @@
 # [[plugins]]
 #  package = "@netlify/plugin-nextjs"
 
-# Redirect root to index.html
+# Primary redirect: Always send root to landing page
 [[redirects]]
   from = "/"
-  to = "/index.html"
+  to = "/landing/index.html"
+  status = 301
+  force = true
+
+# SPA fallbacks by section
+[[redirects]]
+  from = "/landing/*"
+  to = "/landing/index.html"
   status = 200
 
-# Fallback for SPA
+[[redirects]]
+  from = "/shopping-list/*"
+  to = "/shopping-list/index.html"
+  status = 200
+
+# Default SPA fallback
 [[redirects]]
   from = "/*"
   to = "/index.html"
