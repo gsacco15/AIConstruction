@@ -1,0 +1,22 @@
+[build]
+  command = "npm run export"
+  publish = "out"
+
+[build.environment]
+  NETLIFY_NEXT_PLUGIN_SKIP = "true"
+
+# Remove the plugin since we're doing static export
+# [[plugins]]
+#  package = "@netlify/plugin-nextjs"
+
+# Redirect root to index.html
+[[redirects]]
+  from = "/"
+  to = "/index.html"
+  status = 200
+
+# Fallback for SPA
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200 
