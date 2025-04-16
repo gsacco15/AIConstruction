@@ -23,6 +23,11 @@ const openai = new OpenAI({
 // The Assistant ID to use
 const ASSISTANT_ID = process.env.OPENAI_ASSISTANT_ID || 'asst_Vyg9xBn8t8QZtdYwdJRTZAr1';
 
+// Log configuration info (without exposing full API key)
+console.log('Function configuration:');
+console.log('- API Key present:', process.env.OPENAI_API_KEY ? 'Yes (starts with ' + process.env.OPENAI_API_KEY.substring(0, 5) + '...)' : 'No');
+console.log('- Assistant ID:', ASSISTANT_ID);
+
 // Store thread IDs in memory (these will be lost when the function is redeployed)
 const threads = new Map();
 
@@ -61,7 +66,8 @@ exports.handler = async function(event, context) {
     const useMockMode = !process.env.OPENAI_API_KEY;
     
     if (useMockMode) {
-      console.log("Using mock mode for API:", action);
+      console.log("MOCK MODE ACTIVATED: No OpenAI API key found in environment variables");
+      console.log("Using mock mode for API action:", action);
       
       switch (action) {
         case 'createThread': {
