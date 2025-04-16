@@ -1,5 +1,16 @@
 const OpenAI = require('openai');
-const { createAffiliateLink } = require('../../src/utils/affiliateUtils');
+
+// Define affiliate utils directly in the function instead of importing
+const AFFILIATE_TAG = "aiconstructio-20";
+
+/**
+ * Creates an Amazon affiliate link for a product name
+ */
+function createAffiliateLink(productName) {
+  // Replace spaces with "+" for URL encoding
+  const encodedName = encodeURIComponent(productName).replace(/%20/g, "+");
+  return `https://www.amazon.com/s?k=${encodedName}&tag=${AFFILIATE_TAG}`;
+}
 
 // Initialize the OpenAI client
 const openai = new OpenAI({
