@@ -3,13 +3,14 @@
 import { useEffect, useState } from "react";
 import ChatInterface from "@/components/ChatInterface";
 import ResultsDisplay from "@/components/ResultsDisplay";
-import EmailCaptureForm, { EmailCaptureFormProps } from "@/components/EmailCaptureForm";
+import EmailCaptureForm from "@/components/EmailCaptureForm";
 import { ProductItem, Recommendations } from "@/utils/affiliateUtils";
 import { getItemIcon } from "@/utils/materialIcons";
 
 // Define the FormData interface for the email capture form
 interface FormData {
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
 }
 
@@ -57,11 +58,14 @@ export default function Home() {
     setChatStep('results');
   };
   
-  const handleEmailSubmit = (data: { name: string, email: string }) => {
-    // Handle email submission
-    console.log("Email submitted:", data);
-    // After successful submission, show the shopping list
-    setChatStep('shopping-list');
+  const handleEmailSubmit = (formData: FormData) => {
+    // Process the email submission
+    console.log('Email submitted with data:', formData);
+    
+    // Return to chat after submission
+    setChatStep('chat');
+    setSelectedItems([]);
+    setRecommendations(null);
   };
   
   return (
