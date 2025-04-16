@@ -19,9 +19,11 @@ let threadId: string | null = null;
 const getApiBaseUrl = () => {
   // In production on Netlify, use the Netlify functions
   if (typeof window !== 'undefined' && window.location.hostname !== 'localhost') {
+    console.log('Using Netlify functions API');
     return '/.netlify/functions';
   }
   // For local development, use the Next.js API routes
+  console.log('Using Next.js API routes');
   return '/api';
 };
 
@@ -44,6 +46,8 @@ export async function sendMessage(messages: ChatMessage[]): Promise<ChatMessage>
       
       // Use our Netlify function or Next.js API
       const apiBaseUrl = getApiBaseUrl();
+      console.log('API URL:', `${apiBaseUrl}/chat`);
+      
       const response = await fetch(`${apiBaseUrl}/chat`, {
         method: 'POST',
         headers: {
@@ -57,6 +61,8 @@ export async function sendMessage(messages: ChatMessage[]): Promise<ChatMessage>
       });
       
       if (!response.ok) {
+        console.error('API error status:', response.status);
+        console.error('API error text:', await response.text().catch(() => 'No response text'));
         throw new Error(`API responded with status: ${response.status}`);
       }
       
